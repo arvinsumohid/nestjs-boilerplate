@@ -18,10 +18,6 @@ export class UserService {
 
 	async findOne(id: string): Promise<User> {
 		const user = await this.userRepository.findOneBy({ id });
-		if (!user) {
-			throw new BadRequestException('User not found');
-		}
-
 		return user;
 	}
 
@@ -95,12 +91,10 @@ export class UserService {
 				'phone_number',
 				'role',
 				'username',
+				'password',
 			],
 			loadEagerRelations: false,
 		});
-		if (!user) {
-			throw new BadRequestException('User not found');
-		}
 
 		return user;
 	}

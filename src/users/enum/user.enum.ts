@@ -1,11 +1,11 @@
 export enum UserRole {
 	ADMIN = 'ADMIN',
-	PATIENT = 'PATIENT',
-	PROVIDER = 'PROVIDER',
-	DOCTOR = 'DOCTOR',
+	USER = 'USER',
 }
 
 export enum UserGender {
 	MALE = 'MALE',
 	FEMALE = 'FEMALE',
+	OTHER = 'OTHER',
+	UNSPECIFIED = 'UNSPECIFIED',
 }

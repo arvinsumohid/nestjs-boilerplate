@@ -1,36 +1,45 @@
 import { IsEmail, MinLength, IsEnum, IsString, IsOptional, IsNotEmpty, Matches, IsPhoneNumber } from 'class-validator';
 import { UserRole, UserGender } from '../enum/user.enum';
 import { User } from '../entities/user.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class UserDto {
+	@ApiProperty({ example: 'user@example.com', required: true })
 	@IsEmail()
 	@IsNotEmpty()
 	email_address: string;
 
+	@ApiProperty({ example: 'password', required: true })
 	@MinLength(6)
 	@IsNotEmpty()
 	password: string;
 
+	@ApiProperty({ example: 'USER', required: false })
 	@IsEnum(UserRole)
-	role: UserRole = UserRole.PATIENT;
+	role: UserRole = UserRole.USER;
 
+	@ApiProperty({ example: 'John', required: true })
 	@MinLength(2)
 	@IsString()
 	first_name: string;
 
+	@ApiProperty({ example: 'Doe', required: false })
 	@IsString()
 	@IsOptional()
 	middle_name?: string;
 
+	@ApiProperty({ example: 'Doe', required: true })
 	@MinLength(2)
 	@IsString()
 	last_name: string;
 
+	@ApiProperty({ example: 'john_doe', required: true })
 	@MinLength(2)
 	@IsString()
 	@IsNotEmpty()
 	username: string;
 
+	@ApiProperty({ example: '01/01/2000', required: true })
 	@IsString()
 	@IsNotEmpty()
 	@Matches(/^\d{2}\/\d{2}\/\d{4}$/, {
@@ -38,16 +47,24 @@ export class UserDto {
 	})
 	birthdate: string;
 
+	@ApiProperty({ example: 'MALE', required: true })
 	@IsNotEmpty()
 	@IsEnum(UserGender)
 	gender: UserGender;
 
+	@ApiProperty({ example: '09123456789', required: true })
 	@IsPhoneNumber('PH')
 	phone_number: string;
 
+	@ApiProperty({ example: 'Description', required: false })
 	@IsString()
 	@IsOptional()
 	description?: string;
+
+	@ApiProperty({ example: 'https://example.com/profile.jpg', required: false })
+	@IsString()
+	@IsOptional()
+	profile_image?: string;
 
 	static fields(): string[] {
 		return [

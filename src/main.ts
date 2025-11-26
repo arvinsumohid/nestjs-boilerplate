@@ -7,6 +7,7 @@ import { initializeTransactionalContext, addTransactionalDataSource } from 'type
 import AppDataSource from './data-source';
 import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
 	initializeTransactionalContext();
@@ -36,6 +37,30 @@ async function bootstrap() {
 			forbidUnknownValues: true,
 		}),
 	);
+
+	const config = new DocumentBuilder()
+		.setTitle(process.env.APP_NAME ?? 'NestJS Boilerplate API')
+		.setDescription(process.env.APP_DESCRIPTION ?? 'NestJS Boilerplate API description')
+		.setVersion('1.0')
+		.addBearerAuth(
+			{
+				type: 'http',
+				scheme: 'bearer',
+				bearerFormat: 'JWT',
+				name: 'JWT',
+				description: 'Enter JWT token',
+				in: 'header',
+			},
+			'access-token', // This name is important for matching with @ApiBearerAuth() in your controllers
+		)
+		.build();
+	const document = SwaggerModule.createDocument(app, config);
+	SwaggerModule.setup('api/docs', app, document, {
+		swaggerOptions: {
+			docExpansion: 'none',
+		},
+	});
+
 	await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap().catch((err) => {

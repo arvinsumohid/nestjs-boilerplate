@@ -12,7 +12,6 @@ export class UniqueUserInterceptor implements NestInterceptor {
 	async intercept(context: ExecutionContext, next: CallHandler): Promise<Observable<UserDto>> {
 		const request: Request = context.switchToHttp().getRequest();
 		const { username, email_address } = request.body as UserDto;
-
 		if (username) {
 			const userByUsername: User = await this.userService.findOne(username);
 			if (userByUsername) {
@@ -25,6 +24,7 @@ export class UniqueUserInterceptor implements NestInterceptor {
 				throw new BadRequestException('Email already exists');
 			}
 		}
+
 		return next.handle();
 	}
 }

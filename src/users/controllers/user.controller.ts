@@ -8,11 +8,9 @@ import {
 	Param,
 	Delete,
 	Put,
-	Request,
 	Patch,
 	UploadedFile,
 	BadRequestException,
-	Query,
 } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { CreateUserDto, UpdateUserDto } from '../dto/user.dto';

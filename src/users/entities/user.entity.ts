@@ -1,10 +1,10 @@
-import { Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, BeforeInsert } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, BeforeInsert } from 'typeorm';
 import { UserRole } from '../enum/user.enum';
 import { v4 as uuidv4 } from 'uuid';
 
 @Entity('users')
 export class User {
-	@PrimaryColumn({ type: 'char', length: 36 })
+	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
 	@Column()
